@@ -25,7 +25,7 @@ You can then replace the existing XML to see the policy changes.
 
 In the DMN editor rules are visualized something like:
 
-![Price decision rules](./screenshot.png =500x)
+![Price decision rules](https://raw.githubusercontent.com/xaviarias/video-rental-store/master/screenshot.png =500x)
 
 Other considerations
 --------------------
