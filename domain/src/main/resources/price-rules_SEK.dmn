@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn11.xsd" id="definitions" name="definitions"
+             namespace="http://camunda.org/schema/1.0/dmn">
+    <decision id="priceDecision" name="Video Rental Prices">
+        <decisionTable id="decisionTable" hitPolicy="ANY">
+            <input id="InputClause_1j7zq0a" label="Number of days">
+                <inputExpression id="LiteralExpression_1n17qsv" typeRef="integer">
+                    <text>numberOfDays</text>
+                </inputExpression>
+            </input>
+            <input id="InputClause_18gy28p" label="Film type">
+                <inputExpression id="LiteralExpression_1xpmsi8" typeRef="string">
+                    <text>type</text>
+                </inputExpression>
+            </input>
+            <output id="output1" label="Total price" name="price" typeRef="double"/>
+            <output id="OutputClause_1ag8ze0" label="Late charges" name="lateCharges" typeRef="double"/>
+            <rule id="row-557295321-1">
+                <description><![CDATA[Price is <premium price> times number of days rented.]]></description>
+                <inputEntry id="UnaryTests_0apz5po">
+                    <text></text>
+                </inputEntry>
+                <inputEntry id="UnaryTests_06f37z6">
+                    <text><![CDATA['NEW']]></text>
+                </inputEntry>
+                <outputEntry id="LiteralExpression_1jcsr5f">
+                    <text>premiumPrice * numberOfDays</text>
+                </outputEntry>
+                <outputEntry id="LiteralExpression_0poejy4">
+                    <text>premiumPrice * extraDays</text>
+                </outputEntry>
+            </rule>
+            <rule id="table-484538520-3">
+                <description><![CDATA[Price is <basic price> for the fist 3 days,]]></description>
+                <inputEntry id="UnaryTests_1hbkkg3">
+                    <text><![CDATA[<= 3]]></text>
+                </inputEntry>
+                <inputEntry id="UnaryTests_19pua2y">
+                    <text><![CDATA['REGULAR']]></text>
+                </inputEntry>
+                <outputEntry id="LiteralExpression_157nlj5">
+                    <text>basicPrice</text>
+                </outputEntry>
+                <outputEntry id="LiteralExpression_0k525gh">
+                    <text>basicPrice * extraDays</text>
+                </outputEntry>
+            </rule>
+            <rule id="row-557295321-5">
+                <description><![CDATA[and then <basic price> times the number of days over 3.]]></description>
+                <inputEntry id="UnaryTests_0muxtoo">
+                    <text><![CDATA[> 3]]></text>
+                </inputEntry>
+                <inputEntry id="UnaryTests_1pa4t43">
+                    <text><![CDATA['REGULAR']]></text>
+                </inputEntry>
+                <outputEntry id="LiteralExpression_12ouo12">
+                    <text>basicPrice + (basicPrice * (numberOfDays - 3))</text>
+                </outputEntry>
+                <outputEntry id="LiteralExpression_0l3bcas">
+                    <text>basicPrice * extraDays</text>
+                </outputEntry>
+            </rule>
+            <rule id="row-98328621-1">
+                <description><![CDATA[Price is <basic price> for the fist 5 days,]]></description>
+                <inputEntry id="UnaryTests_088a2rm">
+                    <text><![CDATA[<= 5]]></text>
+                </inputEntry>
+                <inputEntry id="UnaryTests_0aklpwn">
+                    <text><![CDATA['OLD']]></text>
+                </inputEntry>
+                <outputEntry id="LiteralExpression_01y5j37">
+                    <text>basicPrice</text>
+                </outputEntry>
+                <outputEntry id="LiteralExpression_1wibnh1">
+                    <text>basicPrice * extraDays</text>
+                </outputEntry>
+            </rule>
+            <rule id="row-98328621-2">
+                <description><![CDATA[and then <basic price> times the number of days over 5.]]></description>
+                <inputEntry id="UnaryTests_1oaip7a">
+                    <text><![CDATA[> 5]]></text>
+                </inputEntry>
+                <inputEntry id="UnaryTests_0vmdwqd">
+                    <text><![CDATA['OLD']]></text>
+                </inputEntry>
+                <outputEntry id="LiteralExpression_0r53gjs">
+                    <text>basicPrice + (basicPrice * (numberOfDays - 5))</text>
+                </outputEntry>
+                <outputEntry id="LiteralExpression_0zqguqy">
+                    <text>basicPrice * extraDays</text>
+                </outputEntry>
+            </rule>
+        </decisionTable>
+    </decision>
+</definitions>
