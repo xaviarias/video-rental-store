@@ -17,18 +17,17 @@ To start the Video Rental Store, go to to the folder `rest-api` and execute:
 
 To check if the server is up, navigate from your browser to the URLs:
 
-http://localhost:8080/api/films
-
-http://localhost:8080/api/customers
+[http://localhost:8080/api/films](http://localhost:8080/api/films)
+[http://localhost:8080/api/customers](http://localhost:8080/api/customers)
   
 REST API
 --------
 
 * The exposed resources are: `customers`, `films`, `orders` and `rentals`.
-** Each resource can list its contents by a `GET` request.
-** When appending a valid resource id, `GET` requests return the resource data.
-** For `orders` and `rentals`, `POST` method creates new resources and `PUT`
-   method bills the order and returns a film respectively.
+    * Each resource can list its contents by a `GET` request.
+    * When appending a valid resource id, `GET` requests return the resource data.
+    * For `orders` and `rentals`, `POST` method creates new resources and `PUT`
+      method bills the order and returns a film respectively.
 
 * Dates and money are serialized in JSON as their corresponding ISO strings.
 
@@ -40,7 +39,7 @@ Decision rules
 --------------
 
 Prices decision rules are implemented using Camunda DMN in a per-currency basis.
-To change the rules, go to http://demo.bpmn.io/dmn/new and load the file 
+To change the rules, go to the [DMN Toolkit demo](http://demo.bpmn.io/dmn/new) and load the file 
 corresponding to the currency you want to apply the rules for, following the pattern:
 `/video-rental-store/domain/src/main/resources/price-rules_<currency code>.dmn`.
 
