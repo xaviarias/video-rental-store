@@ -83,8 +83,6 @@ public class VideoRentalAppTest extends JerseyTest {
 
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
 
-        Rental rental = createRental(order, findAnyFilm());
-
         // Rent nonexistent film
         response = target("orders/{orderId}/rentals")
                 .resolveTemplate("orderId", order.getId())
@@ -94,6 +92,7 @@ public class VideoRentalAppTest extends JerseyTest {
 
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
 
+        Rental rental = createRental(order, findAnyFilm());
         returnRental(rental);
 
         // Return film more than once
