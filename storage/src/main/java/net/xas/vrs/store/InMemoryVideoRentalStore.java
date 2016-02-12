@@ -7,6 +7,7 @@ import net.xas.vrs.model.Rental;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.unmodifiableCollection;
 
@@ -82,7 +83,9 @@ public class InMemoryVideoRentalStore
     }
 
     public Collection<Film> retrieveAllFilms() {
-        return unmodifiableCollection(films.values());
+        return unmodifiableCollection(films.values().stream()
+                .sorted(Comparator.comparing(Film::getName))
+                .collect(Collectors.toList()));
     }
 
     @Override
