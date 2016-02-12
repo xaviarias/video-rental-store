@@ -36,7 +36,7 @@ public class InMemoryVideoRentalStore
     public void update(Order order) {
         Objects.requireNonNull(order, "Order cannot be null");
 
-        if (rentals.get(order.getId()) == null) {
+        if (orders.get(order.getId()) == null) {
             throw new NoSuchElementException();
         }
 
