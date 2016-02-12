@@ -56,7 +56,7 @@ public class RentalResource {
     @NotNull
     public Collection<Rental> listRentals() {
         Order order = service.retrieveOrder(orderId);
-        return order.getRentals().stream()
+        return order.getRentals().parallelStream()
                 .map(service::retrieveRental)
                 .collect(Collectors.toList());
     }

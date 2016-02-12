@@ -185,7 +185,7 @@ public class VideoRentalService {
         }
 
         // Validate order rentals
-        if (order.getRentals().stream()
+        if (order.getRentals().parallelStream()
                 .map(store::retrieveRental)
                 .anyMatch(r -> !r.isReturned())) {
             String message = format("Order [%s] has ongoing rentals.", orderId);
