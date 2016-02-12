@@ -24,6 +24,12 @@ http://localhost:8080/api/customers
 REST API
 --------
 
+* The exposed resources are: `customers`, `films`, `orders` and `rentals`.
+** Each resource can list its contents by a `GET` request.
+** When appending a valid resource id, `GET` requests return the resource data.
+** For `orders` and `rentals`, `POST` method creates new resources and `PUT`
+   method bills the order and returns a film respectively.
+
 * Dates and money are serialized in JSON as their corresponding ISO strings.
 
 * Error codes are simplified as `202 (OK)`, `400 (Bad request)` and `404 (Not found)`,
