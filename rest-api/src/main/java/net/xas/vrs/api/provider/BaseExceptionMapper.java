@@ -1,13 +1,15 @@
-package net.xas.vrs.api;
+package net.xas.vrs.api.provider;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 import java.util.*;
 
 /**
  * Generic exception mapper.
  */
-class BaseExceptionMapper implements ExceptionMapper<Exception> {
+@Provider
+public class BaseExceptionMapper implements ExceptionMapper<Exception> {
 
     @Override
     public Response toResponse(Exception exception) {

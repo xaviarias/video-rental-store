@@ -67,6 +67,10 @@ public class VideoRentalService {
         return customer;
     }
 
+    public Collection<Customer> listCustomers() {
+        return store.retrieveAllCustomers();
+    }
+
     public Order createOrder(String customerId, CurrencyUnit currency) {
         Objects.requireNonNull(customerId, "customerId cannot be null");
         Objects.requireNonNull(currency, "currency cannot be null");
@@ -122,7 +126,7 @@ public class VideoRentalService {
     }
 
 
-    public Rental rent(String orderId, String filmId, int numberOfDays) {
+    public Rental createRental(String orderId, String filmId, int numberOfDays) {
         Objects.requireNonNull(orderId, "orderId");
         Objects.requireNonNull(filmId, "filmId");
 
@@ -143,8 +147,9 @@ public class VideoRentalService {
         Customer customer = store.retrieveCustomer(order.getCustomerId());
         customer.addBonusPoints(film.getType() == Film.Type.NEW ? 2 : 1);
 
-        order.addRental(rental);
+        order.addRental(rental.getId());
         store.save(rental);
+        store.update(order);
 
         LOG.info("New rental [{}].", rental.getId());
         return rental;
@@ -152,12 +157,9 @@ public class VideoRentalService {
 
     public Rental returnRental(String rentalId) {
         Objects.requireNonNull(rentalId, "rentalId");
-        Rental rental = store.retrieveRental(rentalId);
 
-        if (rental == null) {
-            String message = format("Rental [%s] not exists.", rentalId);
-            throw new NoSuchElementException(message);
-        }
+        Rental rental = store.retrieveRental(rentalId);
+        Objects.requireNonNull(rental, "Rental [%s] not exists.");
 
         if (rental.isReturned()) {
             String message = format("Rental [%s] is already returned.", rentalId);
@@ -196,7 +198,9 @@ public class VideoRentalService {
         calculatePrice(order);
         store.update(order);
 
-        LOG.info("Order [{}] billed with price: {}", orderId, order.getTotal());
+        LOG.info("Order [{}] billed with price [{}] and charge [{}]",
+                orderId, order.getTotalPrice(), order.getTotalLateCharge());
+
         return order;
     }
 

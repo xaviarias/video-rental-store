@@ -8,7 +8,7 @@ import net.xas.vrs.model.Rental;
 import java.util.Collection;
 
 /**
- * Created by Xavi on 08/02/16.
+ * Video rental storage contract.
  */
 public interface VideoRentalStore {
 

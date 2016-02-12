@@ -1,4 +1,4 @@
-package net.xas.vrs.api;
+package net.xas.vrs.api.resource;
 
 import net.xas.vrs.domain.VideoRentalService;
 import net.xas.vrs.model.Order;

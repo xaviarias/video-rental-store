@@ -1,7 +1,12 @@
 package net.xas.vrs.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Objects;
+
 /**
- * Created by Xavi on 08/02/16.
+ * Video rental customer.
  */
 public class Customer {
 
@@ -10,7 +15,13 @@ public class Customer {
 
     private int bonusPoints = 0;
 
-    public Customer(String id, String name) {
+    @JsonCreator
+    public Customer(@JsonProperty("id") String id,
+                    @JsonProperty("name") String name) {
+
+        Objects.requireNonNull(id, "id");
+        Objects.requireNonNull(name, "name");
+
         this.id = id;
         this.name = name;
     }

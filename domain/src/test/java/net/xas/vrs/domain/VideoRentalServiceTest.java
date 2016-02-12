@@ -62,7 +62,7 @@ public class VideoRentalServiceTest {
         Customer customer = customers.iterator().next();
         Order order = service.createOrder(customer.getId(), CurrencyUnit.of("SEK"));
 
-        Rental rental = service.rent(order.getId(), films.stream()
+        Rental rental = service.createRental(order.getId(), films.stream()
                 .filter(film -> film.getName().equals("Wolverine 2"))
                 .findFirst().get().getId(), 2);
 
@@ -70,7 +70,7 @@ public class VideoRentalServiceTest {
         assertThat(rental.getPrice()).isEqualTo(30);
         assertThat(rental.getLateCharge()).isEqualTo(0);
 
-        rental = service.rent(order.getId(), films.stream()
+        rental = service.createRental(order.getId(), films.stream()
                 .filter(film -> film.getName().equals("Freaks"))
                 .findFirst().get().getId(), 7);
 
@@ -78,7 +78,7 @@ public class VideoRentalServiceTest {
         assertThat(rental.getPrice()).isEqualTo(90);
         assertThat(rental.getLateCharge()).isEqualTo(0);
 
-        rental = service.rent(order.getId(), films.stream()
+        rental = service.createRental(order.getId(), films.stream()
                 .filter(film -> film.getName().equals("Terminator 13"))
                 .findFirst().get().getId(), 1);
 
@@ -91,7 +91,7 @@ public class VideoRentalServiceTest {
         assertThat(rental.getLateCharge()).isEqualTo(80);
 
         service.setClock(null); // Reset service clock
-        rental = service.rent(order.getId(), films.stream()
+        rental = service.createRental(order.getId(), films.stream()
                 .filter(film -> film.getName().equals("Wolverine"))
                 .findFirst().get().getId(), 5);
 

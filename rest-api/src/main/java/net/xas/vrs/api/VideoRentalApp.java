@@ -1,5 +1,11 @@
 package net.xas.vrs.api;
 
+import net.xas.vrs.api.provider.BaseExceptionMapper;
+import net.xas.vrs.api.provider.ClientErrorExceptionMapper;
+import net.xas.vrs.api.provider.ObjectMapperResolver;
+import net.xas.vrs.api.resource.CustomerResource;
+import net.xas.vrs.api.resource.FilmResource;
+import net.xas.vrs.api.resource.OrderResource;
 import net.xas.vrs.commons.VideoRentalSettings;
 import net.xas.vrs.domain.VideoRentalService;
 import net.xas.vrs.store.InMemoryVideoRentalStore;
@@ -26,16 +32,8 @@ public class VideoRentalApp extends ResourceConfig {
         register(new AbstractBinder() {
             @Override
             protected void configure() {
-                bindFactory(new Factory<VideoRentalService>() {
-                    @Override
-                    public VideoRentalService provide() {
-                        return service;
-                    }
-
-                    @Override
-                    public void dispose(VideoRentalService instance) {
-                    }
-                }).to(VideoRentalService.class).in(Singleton.class);
+                bindFactory(new VideoRentalServiceFactory(service))
+                        .to(VideoRentalService.class).in(Singleton.class);
             }
         });
 
@@ -46,10 +44,30 @@ public class VideoRentalApp extends ResourceConfig {
 
         // Register providers and features
         registerClasses(BaseExceptionMapper.class,
-                ObjectMapperProvider.class,
+                ClientErrorExceptionMapper.class,
+                ObjectMapperResolver.class,
                 JacksonFeature.class);
 
         property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
+    }
+
+    private static class VideoRentalServiceFactory
+            implements  Factory<VideoRentalService> {
+
+        private final VideoRentalService service;
+
+        VideoRentalServiceFactory(VideoRentalService service) {
+           this.service = service;
+        }
+
+        @Override
+        public VideoRentalService provide() {
+            return service;
+        }
+
+        @Override
+        public void dispose(VideoRentalService instance) {
+        }
     }
 
 }

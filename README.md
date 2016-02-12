@@ -3,14 +3,14 @@ Video Rental Store
 
 Exercise implemented as a JAX-RS API and in-memory storage.
 
-Exposed API
------------
+REST API
+--------
 
 * Dates and money are serialized in JSON as their corresponding ISO strings.
 
 * Error codes are simplified as `202 (OK)`, `400 (Bad request)` and `404 (Not found)`,
-  and reported as an array of JSON objects containing a message 
-  and, for parameter validation, the path and the value of the offending parameter.
+  and reported as an array of JSON objects containing a message. 
+  For parameter validation, also the path and the value of the offending parameter.
 
 Decision rules
 --------------
@@ -29,10 +29,19 @@ In the DMN editor rules are visualized something like:
 
 Other considerations
 --------------------
-* Model entities are not attached to any representation in form of JPA or JSON annotations.
+
+* Model entities are immutable for fields that do not change.
 
 * Date & Time handling is done by the class `java.time.Clock`, allowing alternate times during testing.
 
 * Logging is handled by the SLF4J simple logger. JUL is also redirected to SLF4J.
 
 * Bulk storage retrievals are optimized using Java 8 parallel streams.
+
+Testing
+-------
+
+The module `domain` contains JUnit tests to validate the video rental process and final prices.
+
+The module `rest-api` contains JUnit tests to validate the REST rental process and its errors.
+

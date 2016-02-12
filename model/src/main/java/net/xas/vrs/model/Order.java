@@ -1,13 +1,15 @@
 package net.xas.vrs.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An order of the video rental store.
@@ -21,14 +23,18 @@ public class Order {
     private final String id;
     private final String customerId;
     private final CurrencyUnit currency;
-    private final Map<String, String> rentals;
+    private final Collection<String> rentals;
 
-    private Status status;
+    private Status status = Status.NEW;
 
     private Money totalPrice;
     private Money totalLateCharge;
 
-    public Order(String id, String customerId, CurrencyUnit currency) {
+    @JsonCreator
+    public Order(@JsonProperty("id") String id,
+                 @JsonProperty("customerId") String customerId,
+                 @JsonProperty("currency") CurrencyUnit currency) {
+
         Objects.requireNonNull(id, "id cannot be null");
         Objects.requireNonNull(customerId, "customerId cannot be null");
         Objects.requireNonNull(currency, "currency cannot be null");
@@ -36,10 +42,9 @@ public class Order {
         this.id = id;
         this.customerId = customerId;
         this.currency = currency;
-        this.rentals = new ConcurrentHashMap<>();
-        this.status = Status.NEW;
-        this.totalPrice = Money.zero(getCurrency());
-        this.totalLateCharge = Money.zero(getCurrency());
+        this.rentals = new ArrayList<>();
+        this.totalPrice = Money.zero(currency);
+        this.totalLateCharge = Money.zero(currency);
     }
 
     public String getId() {
@@ -55,12 +60,12 @@ public class Order {
     }
 
     public Collection<String> getRentals() {
-        return Collections.unmodifiableCollection(rentals.values());
+        return Collections.unmodifiableCollection(rentals);
     }
 
-    public void addRental(Rental rental) {
-        Objects.requireNonNull(rental, "Rental cannot be null");
-        this.rentals.put(rental.getId(), rental.getId());
+    public void addRental(String rentalId) {
+        Objects.requireNonNull(rentalId, "Rental ID be null");
+        this.rentals.add(rentalId);
     }
 
     public Status getStatus() {
@@ -72,6 +77,7 @@ public class Order {
         this.status = status;
     }
 
+    @JsonIgnore
     public boolean isClosed() {
         return status == Status.CLOSED;
     }
@@ -92,10 +98,6 @@ public class Order {
     public void setTotalLateCharge(Money lateCharge) {
         Objects.requireNonNull(lateCharge);
         this.totalLateCharge = lateCharge;
-    }
-
-    public Money getTotal() {
-        return Money.total(getTotalPrice(), getTotalLateCharge());
     }
 
 }

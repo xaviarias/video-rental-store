@@ -50,6 +50,7 @@
     </dependencies>
 
     <properties>
+        <jackson.version>2.5.4</jackson.version>
         <slf4j-api.version>1.7.7</slf4j-api.version>
         <junit.version>4.11</junit.version>
         <assertj-core.version>3.3.0</assertj-core.version>

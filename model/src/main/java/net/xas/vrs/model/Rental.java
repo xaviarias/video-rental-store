@@ -1,5 +1,9 @@
 package net.xas.vrs.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
@@ -24,11 +28,12 @@ public class Rental {
     private Double lateCharge;
     private LocalDateTime returnDate;
 
-    public Rental(String id, String orderId, int numberOfDays,
-                  LocalDateTime pickupDate, String filmId) {
-
-        if (numberOfDays < 1)
-            throw new IllegalArgumentException("numberOfDays");
+    @JsonCreator
+    public Rental(@JsonProperty("id") String id,
+                  @JsonProperty("orderId") String orderId,
+                  @JsonProperty("numberOfDays") int numberOfDays,
+                  @JsonProperty("pickupDate") LocalDateTime pickupDate,
+                  @JsonProperty("filmId") String filmId) {
 
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(orderId, "orderId");
@@ -95,10 +100,12 @@ public class Rental {
         this.returnDate = returnDate;
     }
 
+    @JsonIgnore
     public boolean isReturned() {
         return status == Status.RETURNED;
     }
 
+    @JsonIgnore
     public int getExtraDays() {
         int days = isReturned() ?
                 (int) ChronoUnit.DAYS.between(pickupDate, returnDate) :

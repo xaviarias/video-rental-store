@@ -1,4 +1,4 @@
-package net.xas.vrs.api;
+package net.xas.vrs.api.resource;
 
 import net.xas.vrs.domain.VideoRentalService;
 import net.xas.vrs.model.Order;
@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
  */
 @RequestScoped
 @Path("{orderId}/rentals")
+@Produces(MediaType.APPLICATION_JSON)
 public class RentalResource {
 
     private final VideoRentalService service;
@@ -39,7 +40,7 @@ public class RentalResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Rental createRental(@NotNull @FormParam("filmId") String filmId,
                                @NotNull @FormParam("numberOfDays") @Min(1) int numberOfDays) {
-        return service.rent(orderId, filmId, numberOfDays);
+        return service.createRental(orderId, filmId, numberOfDays);
     }
 
 

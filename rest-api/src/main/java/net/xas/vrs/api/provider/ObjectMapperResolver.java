@@ -1,4 +1,4 @@
-package net.xas.vrs.api;
+package net.xas.vrs.api.provider;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -16,11 +16,11 @@ import java.io.IOException;
  * JSON object mapper customizations.
  */
 @Provider
-class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
+public class ObjectMapperResolver implements ContextResolver<ObjectMapper> {
 
     private final ObjectMapper defaultObjectMapper;
 
-    public ObjectMapperProvider() {
+    public ObjectMapperResolver() {
         defaultObjectMapper = new ObjectMapper();
         defaultObjectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         defaultObjectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
