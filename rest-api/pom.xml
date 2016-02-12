@@ -16,7 +16,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.xarias</groupId>
+            <groupId>net.xas</groupId>
             <artifactId>domain</artifactId>
             <version>${project.version}</version>
         </dependency>

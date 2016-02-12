@@ -15,12 +15,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.xarias</groupId>
+            <groupId>net.xas</groupId>
             <artifactId>commons</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.xarias</groupId>
+            <groupId>net.xas</groupId>
             <artifactId>storage</artifactId>
             <version>${project.version}</version>
         </dependency>
