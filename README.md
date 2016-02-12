@@ -1,7 +1,12 @@
 Video Rental Store
 ==================
 
-Exercise implemented as a JAX-RS API and in-memory storage.
+Exercise implemented in Java 8 as a JAX-RS API and in-memory storage.
+
+* The entities involved are: customer, film, order and rental.
+
+* The video rental process is simplified from a real flow. Notably,
+an order can only be billed once all their rentals are returned.
 
 REST API
 --------
