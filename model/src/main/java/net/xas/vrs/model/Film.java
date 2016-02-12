@@ -8,13 +8,12 @@ import java.util.Objects;
 /**
  * Video rental film.
  */
-public class Film {
+public class Film extends Resource {
 
     public enum Type {
         NEW, REGULAR, OLD
     }
 
-    private final String id;
     private String name;
     private Type type;
 
@@ -23,17 +22,13 @@ public class Film {
                 @JsonProperty("name") String name,
                 @JsonProperty("type") Type type) {
 
-        Objects.requireNonNull(id, "id");
+        super(id);
+
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(type, "type");
 
-        this.id = id;
         this.name = name;
         this.type = type;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getName() {

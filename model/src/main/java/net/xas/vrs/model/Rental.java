@@ -11,13 +11,12 @@ import java.util.Objects;
 /**
  * Created by Xavi on 08/02/16.
  */
-public class Rental {
+public class Rental extends Resource {
 
     public enum Status {
         ONGOING, RETURNED
     }
 
-    private final String id;
     private final String orderId;
     private final int numberOfDays;
     private final LocalDateTime pickupDate;
@@ -35,21 +34,17 @@ public class Rental {
                   @JsonProperty("pickupDate") LocalDateTime pickupDate,
                   @JsonProperty("filmId") String filmId) {
 
-        Objects.requireNonNull(id, "id");
+        super(id);
+
         Objects.requireNonNull(orderId, "orderId");
         Objects.requireNonNull(pickupDate, "pickupDate");
         Objects.requireNonNull(filmId, "filmId");
 
-        this.id = id;
         this.orderId = orderId;
         this.status = Status.ONGOING;
         this.numberOfDays = numberOfDays;
         this.pickupDate = pickupDate;
         this.filmId = filmId;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getOrderId() {

@@ -8,26 +8,18 @@ import java.util.Objects;
 /**
  * Video rental customer.
  */
-public class Customer {
+public class Customer extends Resource {
 
-    private final String id;
     private final String name;
-
     private int bonusPoints = 0;
 
     @JsonCreator
     public Customer(@JsonProperty("id") String id,
                     @JsonProperty("name") String name) {
+        super(id);
 
-        Objects.requireNonNull(id, "id");
         Objects.requireNonNull(name, "name");
-
-        this.id = id;
         this.name = name;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getName() {

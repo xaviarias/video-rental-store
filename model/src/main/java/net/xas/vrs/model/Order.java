@@ -14,13 +14,12 @@ import java.util.Objects;
 /**
  * An order of the video rental store.
  */
-public class Order {
+public class Order extends Resource {
 
     public enum Status {
         NEW, CLOSED
     }
 
-    private final String id;
     private final String customerId;
     private final CurrencyUnit currency;
     private final Collection<String> rentals;
@@ -35,20 +34,16 @@ public class Order {
                  @JsonProperty("customerId") String customerId,
                  @JsonProperty("currency") CurrencyUnit currency) {
 
-        Objects.requireNonNull(id, "id cannot be null");
-        Objects.requireNonNull(customerId, "customerId cannot be null");
-        Objects.requireNonNull(currency, "currency cannot be null");
+        super(id);
 
-        this.id = id;
+        Objects.requireNonNull(customerId, "customerId");
+        Objects.requireNonNull(currency, "currency");
+
         this.customerId = customerId;
         this.currency = currency;
         this.rentals = new ArrayList<>();
         this.totalPrice = Money.zero(currency);
         this.totalLateCharge = Money.zero(currency);
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getCustomerId() {
