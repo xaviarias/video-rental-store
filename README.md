@@ -8,6 +8,19 @@ Exercise implemented in Java 8 as a JAX-RS API and in-memory storage.
 * The video rental process is simplified from a real flow. Notably,
 an order can only be billed once all their rentals are returned.
 
+Quick start
+-----------
+
+To start the Video Rental Store, go to to the folder `rest-api` and execute:
+
+`mvn jetty::run`
+
+To check if the server is up, navigate from your browser to the URLs:
+
+http://localhost:8080/api/films
+
+http://localhost:8080/api/customers
+  
 REST API
 --------
 
