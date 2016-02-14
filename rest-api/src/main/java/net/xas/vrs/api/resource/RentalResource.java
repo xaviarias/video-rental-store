@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
- * Created by Xavi on 11/02/16.
+ * The video rental resource to manage film rentals.
  */
 @RequestScoped
 @Path("{orderId}/rentals")
@@ -57,7 +57,7 @@ public class RentalResource {
     @NotNull
     public Collection<Rental> listRentals() {
         Order order = service.retrieveOrder(orderId);
-        return order.getRentals().parallelStream()
+        return order.getRentals().stream()
                 .map(service::retrieveRental)
                 .collect(Collectors.toList());
     }

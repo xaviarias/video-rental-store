@@ -59,8 +59,6 @@ Other considerations
 
 * Logging is handled by the SLF4J simple logger. JUL is also redirected to SLF4J.
 
-* Bulk storage retrievals are optimized using Java 8 parallel streams.
-
 Testing
 -------
 

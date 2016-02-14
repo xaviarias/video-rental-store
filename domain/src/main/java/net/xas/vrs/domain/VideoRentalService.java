@@ -187,7 +187,7 @@ public class VideoRentalService {
         }
 
         // Validate order rentals
-        if (order.getRentals().parallelStream()
+        if (order.getRentals().stream()
                 .map(store::retrieveRental)
                 .anyMatch(r -> !r.isReturned())) {
             String message = format("Order [%s] has ongoing rentals.", orderId);
@@ -216,8 +216,7 @@ public class VideoRentalService {
 
         // Retrieve rentals from storage
         Collection<Rental> rentals = order.getRentals()
-                .parallelStream()
-                .map(store::retrieveRental)
+                .stream().map(store::retrieveRental)
                 .collect(Collectors.toList());
 
         // Calculate total price
