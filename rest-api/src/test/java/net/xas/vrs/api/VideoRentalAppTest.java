@@ -10,7 +10,6 @@ import org.joda.money.CurrencyUnit;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericType;
@@ -22,11 +21,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Video rental application REST API tests.
  */
-@ApplicationPath("/api")
 public class VideoRentalAppTest extends JerseyTest {
 
     private final CurrencyUnit SEK = CurrencyUnit.of("SEK");
-    private final Entity<String> NULL = Entity.text("");
+    private final Entity<String> EMPTY = Entity.text("");
 
     public VideoRentalAppTest() {
         super(new VideoRentalApp());
@@ -39,7 +37,7 @@ public class VideoRentalAppTest extends JerseyTest {
     }
 
     @Test
-    public void testNominalFlow() throws Exception {
+    public void testNominal() throws Exception {
         Order order = createOrder(findAnyCustomer());
         assertThat(order.getStatus()).isEqualTo(Order.Status.NEW);
 
@@ -79,7 +77,7 @@ public class VideoRentalAppTest extends JerseyTest {
         // Return nonexistent rental
         response = target("orders/{orderId}/rentals/rentalId")
                 .resolveTemplate("orderId", order.getId())
-                .request().put(NULL);
+                .request().put(EMPTY);
 
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
 
@@ -99,7 +97,7 @@ public class VideoRentalAppTest extends JerseyTest {
         response = target("orders/{orderId}/rentals/{rentalId}")
                 .resolveTemplate("orderId", rental.getOrderId())
                 .resolveTemplate("rentalId", rental.getId())
-                .request().put(NULL);
+                .request().put(EMPTY);
 
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
 
@@ -108,7 +106,7 @@ public class VideoRentalAppTest extends JerseyTest {
         // Bill order more than once
         response = target("orders/{orderId}")
                 .resolveTemplate("orderId", order.getId())
-                .request().put(NULL);
+                .request().put(EMPTY);
 
         assertThat(response.getStatusInfo()).isEqualTo(Response.Status.BAD_REQUEST);
 
@@ -142,13 +140,13 @@ public class VideoRentalAppTest extends JerseyTest {
         return target("orders/{orderId}/rentals/{rentalId}")
                 .resolveTemplate("orderId", rental.getOrderId())
                 .resolveTemplate("rentalId", rental.getId())
-                .request().put(NULL, Rental.class);
+                .request().put(EMPTY, Rental.class);
     }
 
     private Order billOrder(Order order) {
         return target("orders/{orderId}")
                 .resolveTemplate("orderId", order.getId())
-                .request().put(NULL, Order.class);
+                .request().put(EMPTY, Order.class);
     }
 
     private Customer findAnyCustomer() {
