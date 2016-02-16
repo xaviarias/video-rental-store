@@ -59,6 +59,12 @@ Other considerations
 
 * Logging is handled by the SLF4J simple logger. JUL is also redirected to SLF4J.
 
+Deployment
+----------
+
+Building the `server` module generates a uber-jar that can be run as an executable JAR.
+It contains the Video Rental Store application in an embedded Jetty server.
+
 Testing
 -------
 
