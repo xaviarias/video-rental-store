@@ -131,7 +131,7 @@ public class VideoRentalService {
         Objects.requireNonNull(filmId, "filmId");
 
         Order order = store.retrieveOrder(orderId);
-        Objects.requireNonNull(order, "orderId");
+        Objects.requireNonNull(order, "order");
 
         if (order.isClosed()) {
             String message = format("Order [%s] is already closed.", orderId);
@@ -139,7 +139,7 @@ public class VideoRentalService {
         }
 
         Film film = store.retrieveFilm(filmId);
-        Objects.requireNonNull(film, "filmId");
+        Objects.requireNonNull(film, "film");
 
         Rental rental = new Rental(UUID.randomUUID().toString(), orderId,
                 numberOfDays, LocalDateTime.now(getClock()), filmId);
